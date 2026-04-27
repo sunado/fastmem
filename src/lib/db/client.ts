@@ -1,7 +1,7 @@
-import Database from 'better-sqlite3';
+import sqlite3 from 'sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
+import { drizzle } from 'drizzle-orm/sqlite3';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,10 +10,14 @@ const __dirname = path.dirname(__filename);
 const dbPath = path.join(process.cwd(), 'data', 'fastmem.db');
 
 // Create or open database
-const sqlite = new Database(dbPath);
+const sqlite = new sqlite3.Database(dbPath, (err) => {
+	if (err) {
+		console.error('Database connection error:', err);
+	}
+});
 
 // Enable foreign keys
-sqlite.pragma('foreign_keys = ON');
+sqlite.run('PRAGMA foreign_keys = ON');
 
 // Initialize Drizzle ORM
 export const db = drizzle(sqlite);

@@ -33,7 +33,7 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
-    "better-sqlite3": "^9.4.0",
+    "sqlite3": "^5.1.6",
     "drizzle-orm": "^0.29.0"
   },
   "type": "module"
